@@ -4,9 +4,11 @@ const menuDesktop = document.querySelector('.desktop-menu');
 const menuHimIcon = document.querySelector('.menu');
 const menuMobile = document.querySelector('.mobile-menu');
 const menuCarritoIcon = document.querySelector('.navbar-shopping-cart')
-const aside = document.querySelector('.product-detail');
-
+const aside = document.querySelector('#shoppingCartContainer');
+const productDetail = document.querySelector('#productDetails');
 const cardsContainer = document.querySelector('.cards-container');
+const closeIcon = document.querySelector('.product-detail-close');
+
 
 menuCarritoIcon.addEventListener('click', () => {
     const isMobileMenuClosed = menuMobile.classList.contains('inactive');
@@ -16,6 +18,10 @@ menuCarritoIcon.addEventListener('click', () => {
     }
     if (!isMenuEmailClosed) {
         menuDesktop.classList.add('inactive');     
+    }
+    const isOpenProduct = productDetail.classList.contains('inactive')
+    if (!isOpenProduct){
+        productDetail.classList.add('inactive');
     }
     aside.classList.toggle('inactive');
 });
@@ -33,98 +39,26 @@ menuHimIcon.addEventListener('click', ()=> {
     if(!isMenuCarritoIconClosed){
         aside.classList.add('inactive');
     }
+    const isOpenProduct = productDetail.classList.contains('inactive')
+    if (!isOpenProduct){
+        productDetail.classList.add('inactive');
+    }
     menuMobile.classList.toggle('inactive');
 });
 
-// list product
+closeIcon.addEventListener('click', ()=>{
+    productDetail.classList.toggle('inactive');
+});
 
-// const productList = [];
-// productList.push({
-//     name:"Bike",
-//     price:120,
-//     image:"https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" 
-// }); 
+function openProduct(){
+    const isCarritoIconClosed = aside.classList.contains('inactive');
+    if(!isCarritoIconClosed){
+        aside.classList.add('inactive');
+    }
+    productDetail.classList.remove('inactive')
+}
 
-// productList.push({
-//     name:"tennis",
-//     price:120,
-//     image:"https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" 
-// });
-
-// productList.push({
-//     name:"computador",
-//     price:120,
-//     image:"https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" 
-// });
-
-//  <div class="product-card">
-// <img src="https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="">
-// <div class="product-info">
-//   <div>
-//     <p>$120,00</p>
-//     <p>Bike</p>
-//   </div>
-//   <figure>
-//     <img src="./icons/bt_add_to_cart.svg" alt="">
-//   </figure>
-// </div>
-// </div>
-
-// for (product of productList) {
-//     const productCard = document.createElement("div");
-//     productCard.classList.add("product-card")
-
-//     const productImg = document.createElement("img");
-//     productImg.setAttribute("src",product.image)
-
-//     const productInfo= document.createElement("div");
-//     productCard.classList.add("product-info")
-
-//     const productInfoDiv= document.createElement("div");
-
-//     const productPrice= document.createElement("p");
-//     productPrice.innerText = "$" + product.name;
-//     const productName= document.createElement("p");
-//     productName.innerText =  product.name;
-
-//     productInfoDiv.appendChild(productPrice);
-//     productInfoDiv.appendChild(productName);
-
-
-
-//     const productInfoFigure= document.createElement("div");
-//     const productImgCart = document.createElement("img");
-//     productImgCart.setAttribute("src","./icons/bt_add_to_cart.svg");
-
-//     productInfoFigure.appendChild(productImgCart);
-//     productInfo.appendChild(productInfoFigure);
-//     productInfo.appendChild(productInfoDiv);
-
-//     productCard.appendChild(productImg);
-//     productCard.appendChild(productInfo);
-
-//     cardsContainer.appendChild(productCard);
-      
-// }
-
-// for (product of productList) {
-//     const htmlCards = `<div class="product-card">
-//     <img src= "${product.img}" class="product-img> 
-//     <div class="product-info">
-//       <div>
-//         <p>$${product.price}</p>
-//         <p>${product.name}</p>
-//       </div>
-//       <figure>
-//         <img src="./icons/bt_add_to_cart.svg" alt="">
-//       </figure>
-//     </div>
-//   </div>`
-
-//   const cardsCOntainers = document.querySelector('.cards-container');
-//   cardsContainer.innerHTML += htmlCards
-
-const productList=[];
+const productList =[];
 productList.push({
     name:'Bike',
     price:120,
@@ -147,7 +81,9 @@ productList.push({
 
                     const productImg=document.createElement('img');
                     productImg.setAttribute('src',product.image);
-
+                    productImg.addEventListener('click', openProduct);
+                    
+                    
                     const productInfo=document.createElement('div');
                     productInfo.classList.add('product-info');
                    
@@ -175,4 +111,3 @@ productList.push({
                     cardsContainer.appendChild(productCard);
                 }}
 renderProducts(productList);
-
